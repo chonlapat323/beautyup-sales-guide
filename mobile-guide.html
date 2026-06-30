@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<title>คู่มือแอป — BeautyUp Sales</title>
+<meta name="description" content="คู่มือการใช้งานแอป BeautyUp Sales สำหรับเซล — บันทึกการเยี่ยมร้าน ดูค่าคอม เชื่อมต่อ LINE">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #16a34a;
+    --green-dark: #052e16;
+    --green-mid: #14532d;
+    --green-light: #f0fdf4;
+    --green-soft: #dcfce7;
+    --green-border: #bbf7d0;
+    --ink: #111827;
+    --ink-body: #374151;
+    --ink-muted: #6b7280;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --radius: 12px;
+    --sans: 'Leelawadee UI', 'Segoe UI', Tahoma, system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink-body);
+    background: #f4fbf6;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: var(--green-dark);
+    padding: 32px 24px 28px;
+    text-align: center;
+  }
+
+  .hero-logo {
+    width: 52px; height: 52px;
+    background: var(--green);
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+    margin-bottom: 14px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.3px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 4px;
+    letter-spacing: 0.2px;
+  }
+
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tab-nav::-webkit-scrollbar { display: none; }
+
+  .tab-link {
+    flex: 1;
+    min-width: 110px;
+    text-align: center;
+    padding: 13px 8px 11px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-link:hover { color: var(--green); }
+
+  .tab-link.active {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+
+  .tab-icon { display: block; font-size: 18px; margin-bottom: 2px; }
+
+  .page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+  }
+
+  .section {
+    margin-bottom: 52px;
+    scroll-margin-top: 64px;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-dark);
+    color: rgba(255,255,255,0.9);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 4px 12px 4px 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .section-label-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--green-dark);
+    margin-bottom: 4px;
+    text-wrap: balance;
+    line-height: 1.25;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--green-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--green-soft);
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 12px; }
+
+  .step {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-body { flex: 1; }
+
+  .step-text { font-size: 14px; color: var(--ink-body); }
+
+  .step-hint {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  .fields { display: flex; flex-direction: column; gap: 10px; }
+
+  .field {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    border: 1px solid #f0f0f0;
+  }
+
+  .field-required {
+    font-size: 10px;
+    font-weight: 800;
+    color: #dc2626;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 1px 6px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .field-optional {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    padding: 1px 6px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .field-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .field-desc {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+
+  .result-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+
+  .result-btn {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    padding: 12px 10px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: #fafafa;
+  }
+
+  .result-btn-icon { font-size: 22px; display: block; }
+  .result-btn-label { font-size: 12px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+  .result-btn-sub { font-size: 11px; color: var(--ink-muted); }
+
+  .result-btn.buy { border-color: #86efac; background: #f0fdf4; }
+  .result-btn.nobuy { border-color: #fca5a5; background: #fff5f5; }
+  .result-btn.notfound { border-color: #93c5fd; background: #eff6ff; }
+
+  .progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+
+  .progress-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+
+  .progress-step::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #e5e7eb;
+    z-index: 0;
+  }
+
+  .progress-step:last-child::before { display: none; }
+
+  .progress-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: #6b7280;
+    position: relative;
+    z-index: 1;
+  }
+
+  .progress-dot.done {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .progress-label {
+    font-size: 10px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #78350f;
+    margin-top: 12px;
+  }
+
+  .note strong { color: #92400e; }
+
+  .tip {
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    border-radius: 9px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--green-mid);
+    margin-top: 12px;
+  }
+
+  .table-wrap { overflow-x: auto; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+  th {
+    background: var(--green-light);
+    text-align: left;
+    padding: 9px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    border-bottom: 1px solid var(--green-border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    color: var(--ink-body);
+    vertical-align: top;
+  }
+
+  td strong { color: var(--ink); font-weight: 600; }
+
+  .divider { height: 1px; background: var(--green-soft); margin: 44px 0; }
+
+  .img-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .img-slot {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1.5px dashed var(--green-border);
+    background: var(--green-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .img-slot-icon { font-size: 20px; }
+
+  .img-slot-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--green-mid);
+    text-align: center;
+    padding: 0 4px;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .stat-box {
+    flex: 1;
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    border-radius: 10px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--green);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--green-mid);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-logo">B</div>
+  <div class="hero-title">BeautyUp Sales</div>
+  <div class="hero-sub">คู่มือการใช้งานแอปสำหรับเซล</div>
+</div>
+
+<nav class="tab-nav" id="tab-nav">
+  <a href="#login" class="tab-link active">
+    <span class="tab-icon">🔑</span>เข้าสู่ระบบ
+  </a>
+  <a href="#record" class="tab-link">
+    <span class="tab-icon">📝</span>บันทึก
+  </a>
+  <a href="#profile" class="tab-link">
+    <span class="tab-icon">👤</span>โปรไฟล์
+  </a>
+  <a href="#connect" class="tab-link">
+    <span class="tab-icon">🔗</span>เชื่อมต่อ
+  </a>
+</nav>
+
+<div class="page">
+
+  <section class="section" id="login">
+    <div class="section-label"><span class="section-label-dot"></span>หน้าแรก</div>
+    <div class="section-title">เข้าสู่ระบบ</div>
+    <div class="section-desc">เปิดแอปแล้วจะพบหน้า Login อัตโนมัติ</div>
+
+    <div class="card">
+      <div class="card-title">ขั้นตอน</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">กรอก <strong>อีเมล</strong> ที่ได้รับจาก Admin</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">กรอก <strong>รหัสผ่าน</strong></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-text">กดปุ่ม <strong>เข้าสู่ระบบ</strong></div>
+            <div class="step-hint">ระบบจะพาไปหน้า บันทึก โดยอัตโนมัติ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note"><strong>ถ้าเข้าไม่ได้:</strong> กล่องแดงจะแสดงข้อความ ให้ตรวจสอบอีเมลและรหัสผ่านอีกครั้ง หรือติดต่อ Admin</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="record">
+    <div class="section-label"><span class="section-label-dot"></span>แท็บ บันทึก</div>
+    <div class="section-title">บันทึกการเยี่ยมร้าน</div>
+    <div class="section-desc">กรอกข้อมูลทีละขั้น ตามแถบสถานะด้านบน</div>
+
+    <div class="card">
+      <div class="card-title">แถบสถานะ 4 ขั้น</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-step">
+          <div class="progress-dot done">1</div>
+          <div class="progress-label">ข้อมูล</div>
+        </div>
+        <div class="progress-step">
+          <div class="progress-dot done">2</div>
+          <div class="progress-label">ผล</div>
+        </div>
+        <div class="progress-step">
+          <div class="progress-dot done">3</div>
+          <div class="progress-label">รูป</div>
+        </div>
+        <div class="progress-step">
+          <div class="progress-dot">4</div>
+          <div class="progress-label">บันทึก</div>
+        </div>
+      </div>
+      <div class="step-hint" style="text-align:center;">แถบจะเปลี่ยนเป็นสีเขียวเมื่อกรอกครบในแต่ละส่วน</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">GPS อัตโนมัติ</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">!</div>
+          <div class="step-body">
+            <div class="step-text">แถบสีเขียวด้านบนแสดงพิกัดปัจจุบัน</div>
+            <div class="step-hint">ถ้าพิกัดไม่แสดง กดปุ่ม รีเฟรช ที่มุมขวา หรือตรวจสอบว่าเปิดสิทธิ์ Location ให้แอปแล้ว</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ส่วนที่ 1 — ข้อมูลร้าน</div>
+      <div class="fields">
+        <div class="field">
+          <div class="field-required">จำเป็น</div>
+          <div>
+            <div class="field-name">ชื่อร้าน</div>
+            <div class="field-desc">พิมพ์แล้วเลือกจากประวัติ หรือพิมพ์ชื่อใหม่</div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-required">จำเป็น</div>
+          <div>
+            <div class="field-name">จังหวัด</div>
+            <div class="field-desc">เลือกจากรายการ กดค้นหาเพื่อกรองได้</div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-optional">ถ้ากทม.</div>
+          <div>
+            <div class="field-name">เขต</div>
+            <div class="field-desc">แสดงเฉพาะเมื่อเลือก กรุงเทพมหานคร</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ส่วนที่ 2 — ประเภทการเยี่ยม</div>
+      <div class="fields">
+        <div class="field">
+          <div class="field-required">จำเป็น</div>
+          <div>
+            <div class="field-name">ทริป</div>
+            <div class="field-desc">On-plan (ตามแผน) หรือ Off-plan (นอกแผน)</div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-required">จำเป็น</div>
+          <div>
+            <div class="field-name">ประเภทลูกค้า</div>
+            <div class="field-desc">ลูกค้าใหม่ หรือ ลูกค้าเก่า</div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-required">จำเป็น</div>
+          <div>
+            <div class="field-name">ภารกิจ</div>
+            <div class="field-desc">คุย / Demo / โทร</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ส่วนที่ 3 — ผลการเยี่ยม</div>
+      <div class="result-btns">
+        <div class="result-btn buy">
+          <span class="result-btn-icon">🛍️</span>
+          <div class="result-btn-label">ซื้อ</div>
+          <div class="result-btn-sub">สั่งซื้อสินค้า</div>
+        </div>
+        <div class="result-btn nobuy">
+          <span class="result-btn-icon">🙅</span>
+          <div class="result-btn-label">ไม่ซื้อ</div>
+          <div class="result-btn-sub">ไม่สั่งในครั้งนี้</div>
+        </div>
+        <div class="result-btn notfound">
+          <span class="result-btn-icon">🔍</span>
+          <div class="result-btn-label">ไม่พบ</div>
+          <div class="result-btn-sub">ไม่มีเจ้าของ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">สลิป (เมื่อเลือก "ซื้อ")</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">กดอัปโหลดสลิป → เลือก <strong>กล้อง</strong> หรือ <strong>แกลเลอรี</strong></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">กด <strong>ตรวจ QR</strong> เพื่อให้ระบบอ่านข้อมูลจากสลิปอัตโนมัติ</div>
+            <div class="step-hint">ถ้าระบบอ่านสำเร็จ → ยอดเงินจะถูกล็อคอัตโนมัติ<br>ถ้าอ่านไม่ได้ → Admin จะตรวจสอบให้ในภายหลัง</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-text">กรอก <strong>ยอดสั่งซื้อ (บาท)</strong> (ถ้าระบบไม่ได้ล็อคให้)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ส่วนที่ 4 — รูปภาพ (อย่างน้อย 1 รูป)</div>
+      <div class="img-grid">
+        <div class="img-slot">
+          <span class="img-slot-icon">🏪</span>
+          <div class="img-slot-label">หน้าร้าน 1</div>
+        </div>
+        <div class="img-slot">
+          <span class="img-slot-icon">🏪</span>
+          <div class="img-slot-label">หน้าร้าน 2</div>
+        </div>
+        <div class="img-slot">
+          <span class="img-slot-icon">🛒</span>
+          <div class="img-slot-label">ภายใน 1</div>
+        </div>
+        <div class="img-slot">
+          <span class="img-slot-icon">🛒</span>
+          <div class="img-slot-label">ภายใน 2</div>
+        </div>
+        <div class="img-slot">
+          <span class="img-slot-icon">💬</span>
+          <div class="img-slot-label">LINE screenshot</div>
+        </div>
+        <div class="img-slot">
+          <span class="img-slot-icon">📄</span>
+          <div class="img-slot-label">X-ray</div>
+        </div>
+      </div>
+      <div class="step-hint" style="margin-top:10px;">กดที่ช่องรูปเพื่อเลือกถ่ายหรือเปิดจากแกลเลอรี</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ส่วนที่ 5 — หมายเหตุ + บันทึก</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">พิมพ์ <strong>หมายเหตุ</strong> (ถ้ามี) ในช่อง textarea</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">กดปุ่ม <strong>บันทึก</strong> (ปุ่มจะ active เมื่อกรอกครบทุกส่วนที่จำเป็น)</div>
+            <div class="step-hint">หลังบันทึกสำเร็จ → Pop-up แสดงชื่อร้านและเครื่องหมายถูก ✓ แล้วฟอร์มจะเคลียร์อัตโนมัติ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="profile">
+    <div class="section-label"><span class="section-label-dot"></span>แท็บ โปรไฟล์</div>
+    <div class="section-title">โปรไฟล์และค่าคอม</div>
+    <div class="section-desc">ดูสถิติส่วนตัว ค่าคอมรายเดือน และจัดการบัญชีธนาคาร</div>
+
+    <div class="card">
+      <div class="card-title">สถิติภาพรวม</div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">—</div>
+          <div class="stat-label">เยี่ยมทั้งหมด</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">—</div>
+          <div class="stat-label">ซื้อ</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">—</div>
+          <div class="stat-label">จังหวัด</div>
+        </div>
+      </div>
+      <div class="step-hint" style="margin-top:10px;">กดที่รายการจังหวัดด้านล่างเพื่อดูรายการเยี่ยมในจังหวัดนั้น</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ค่าคอมรายเดือน</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">กดลูกศร <strong>◀ ▶</strong> เพื่อเปลี่ยนเดือน</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">ดูยอดขาย ค่าคอม และสถานะ (ยืนยันแล้ว / รออนุมัติ)</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-text">แถบ progress แสดงความคืบหน้าสู่เกณฑ์ขั้นต่ำ</div>
+            <div class="step-hint">ถ้าถึงเกณฑ์แล้ว — Admin จะโอนค่าคอมให้ภายในรอบจ่ายของเดือน</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">บัญชีธนาคาร</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">กด <strong>แก้ไข</strong> ที่มุมขวาของส่วนบัญชีธนาคาร</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">เลือก <strong>ธนาคาร</strong> จากรายการ และกรอก <strong>เลขบัญชี</strong></div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-text">กด <strong>บันทึก</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:12px;"><strong>สำคัญ:</strong> ต้องกรอกบัญชีธนาคารก่อน ถึงจะได้รับค่าคอม</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">ออกจากระบบ</div>
+      <div class="step-text" style="font-size:14px;">กดปุ่ม <strong style="color:#dc2626;">ออกจากระบบ</strong> ด้านล่างสุดของหน้า → กด <strong>ยืนยัน</strong> ในหน้าต่างที่ปรากฏ</div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="connect">
+    <div class="section-label"><span class="section-label-dot"></span>แท็บ เชื่อมต่อ</div>
+    <div class="section-title">เชื่อมต่อ LINE Group</div>
+    <div class="section-desc">เชื่อม Bot เข้ากลุ่ม LINE เพื่อรับข้อความสินค้าจาก Admin</div>
+
+    <div class="card">
+      <div class="card-title">ขั้นตอน</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-text">กดปุ่ม <strong>เพิ่ม Bot เป็นเพื่อน</strong> → ยืนยันใน LINE</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-text">เพิ่ม Bot เข้ากลุ่ม LINE ที่ต้องการ</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-text">กลับมาที่แอป กด <strong>สร้างรหัสยืนยัน</strong></div>
+            <div class="step-hint">รหัสมีอายุ 5 นาที</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-text">กด <strong>คัดลอก</strong> แล้ว<strong>วางรหัสในกลุ่ม LINE</strong></div>
+            <div class="step-hint">Bot จะตอบกลับยืนยันการเชื่อมต่ออัตโนมัติ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">ถ้ารหัสหมดอายุก่อนใช้ ให้กด <strong>สร้างรหัสยืนยัน</strong> ใหม่อีกครั้ง</div>
+  </section>
+
+</div>
+
+<script>
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const sections = document.querySelectorAll('.section');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tabLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.tab-link[href="#' + entry.target.id + '"]');
+        if (active) {
+          active.classList.add('active');
+          active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+  }, { rootMargin: '-20% 0px -65% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>คู่มือการใช้งาน — BeautyUp Admin</title>
+<meta name="description" content="คู่มือการใช้งาน BeautyUp Sales Admin Panel สำหรับผู้ดูแลระบบ">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #16a34a;
+    --green-dark: #052e16;
+    --green-mid: #14532d;
+    --green-light: #f0fdf4;
+    --green-border: #bbf7d0;
+    --ink: #111827;
+    --ink-body: #374151;
+    --ink-muted: #6b7280;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --sidebar-w: 240px;
+    --radius: 10px;
+    --sans: 'Leelawadee UI', 'Segoe UI', Tahoma, system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink-body);
+    background: #f8fafb;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--green-dark);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 50;
+  }
+
+  .sidebar-brand {
+    padding: 22px 20px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidebar-brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.2px;
+  }
+
+  .sidebar-brand-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+  }
+
+  .sidebar-nav { padding: 12px 0; flex: 1; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 14px 20px 6px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 20px;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+  .nav-link.active {
+    color: #fff;
+    border-left-color: #4ade80;
+    background: rgba(74,222,128,0.08);
+    font-weight: 600;
+  }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  .nav-link.active .nav-dot { opacity: 1; background: #4ade80; }
+
+  .main {
+    margin-left: var(--sidebar-w);
+    padding: 48px 52px 80px;
+    max-width: calc(var(--sidebar-w) + 760px);
+  }
+
+  .page-header {
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 2px solid var(--green-border);
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--green-dark);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .page-desc {
+    margin-top: 10px;
+    font-size: 15px;
+    color: var(--ink-muted);
+    max-width: 540px;
+  }
+
+  .section {
+    margin-bottom: 56px;
+    scroll-margin-top: 32px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .section-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--green-dark);
+    text-wrap: balance;
+  }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 1px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+
+  .step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-text { font-size: 14px; color: var(--ink-body); }
+
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  .pill {
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    color: var(--green-mid);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .pill.gray {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+    color: #374151;
+  }
+
+  .note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #78350f;
+    margin-top: 12px;
+  }
+
+  .note strong { color: #92400e; }
+
+  .tip {
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--green-mid);
+    margin-top: 12px;
+  }
+
+  .table-wrap { overflow-x: auto; margin-top: 12px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+  th {
+    background: #f9fafb;
+    text-align: left;
+    padding: 9px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #f3f4f6;
+    color: var(--ink-body);
+    vertical-align: top;
+  }
+
+  td strong { color: var(--ink); font-weight: 600; }
+
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+  @media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); }
+    .main { margin-left: 0; padding: 24px 20px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-name">BeautyUp Sales</div>
+    <div class="sidebar-brand-sub">Admin Guide</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">เริ่มต้น</div>
+    <a href="#login" class="nav-link active"><span class="nav-dot"></span>เข้าสู่ระบบ</a>
+
+    <div class="nav-section-label">รายงาน</div>
+    <a href="#dashboard" class="nav-link"><span class="nav-dot"></span>ภาพรวม</a>
+    <a href="#sales" class="nav-link"><span class="nav-dot"></span>สถิติเซล</a>
+    <a href="#visits" class="nav-link"><span class="nav-dot"></span>การเยี่ยมร้าน</a>
+
+    <div class="nav-section-label">การเงิน</div>
+    <a href="#approvals" class="nav-link"><span class="nav-dot"></span>อนุมัติสลิป</a>
+    <a href="#commissions" class="nav-link"><span class="nav-dot"></span>ค่าคอม</a>
+
+    <div class="nav-section-label">LINE</div>
+    <a href="#send" class="nav-link"><span class="nav-dot"></span>ส่งข้อความ</a>
+    <a href="#connect" class="nav-link"><span class="nav-dot"></span>เชื่อมต่อกลุ่ม</a>
+
+    <div class="nav-section-label">ระบบ</div>
+    <a href="#settings" class="nav-link"><span class="nav-dot"></span>ตั้งค่า</a>
+    <a href="#users" class="nav-link"><span class="nav-dot"></span>จัดการผู้ใช้</a>
+    <a href="#roles" class="nav-link"><span class="nav-dot"></span>จัดการสิทธิ์</a>
+  </nav>
+</div>
+
+<main class="main">
+  <div class="page-header">
+    <div class="page-eyebrow">คู่มือการใช้งาน</div>
+    <h1 class="page-title">BeautyUp Sales Admin Panel</h1>
+    <p class="page-desc">คู่มือสำหรับผู้ดูแลระบบ ครอบคลุมการใช้งานทุกเมนูตั้งแต่ดูรายงานไปจนถึงตั้งค่าระบบ</p>
+  </div>
+
+  <section class="section" id="login">
+    <div class="section-header">
+      <div class="section-icon">🔑</div>
+      <div>
+        <div class="section-title">เข้าสู่ระบบ</div>
+        <div class="section-sub">adminsales.beautyup-enterprise.com</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">ขั้นตอน</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">เปิด <strong>adminsales.beautyup-enterprise.com</strong> ในเบราว์เซอร์</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กรอก <strong>อีเมล</strong> และ <strong>รหัสผ่าน</strong> ที่ได้รับจาก Admin</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">กดปุ่ม <strong>เข้าสู่ระบบ</strong></div></div>
+      </div>
+    </div>
+    <div class="note"><strong>หมายเหตุ:</strong> เมนูที่มองเห็นขึ้นอยู่กับสิทธิ์ที่ได้รับ ถ้าไม่เห็นเมนูใด ให้ติดต่อ Admin เพื่อขอสิทธิ์เพิ่ม</div>
+  </section>
+
+  <section class="section" id="dashboard">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div>
+        <div class="section-title">ภาพรวม</div>
+        <div class="section-sub">สรุปยอดการเยี่ยมร้านค้าทั้งหมดของทีม</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">การกรองข้อมูล</div>
+      <p style="font-size:14px;margin-bottom:8px;">เลือกช่วงเวลาด้วยปุ่มด้านบน:</p>
+      <div class="pills">
+        <span class="pill">วันนี้</span>
+        <span class="pill">สัปดาห์นี้</span>
+        <span class="pill">เดือนนี้</span>
+        <span class="pill">กำหนดเอง</span>
+      </div>
+      <p style="font-size:14px;margin-top:14px;margin-bottom:8px;">กรองเพิ่มเติมด้วย Dropdown:</p>
+      <div class="pills">
+        <span class="pill gray">จังหวัด</span>
+        <span class="pill gray">เซล</span>
+        <span class="pill gray">ผลการเยี่ยม</span>
+        <span class="pill gray">ทริป</span>
+        <span class="pill gray">ภารกิจ</span>
+        <span class="pill gray">ประเภทลูกค้า</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">การ์ดสรุปข้อมูล</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>การ์ด</th><th>ความหมาย</th></tr>
+          <tr><td><strong>เยี่ยมทั้งหมด</strong></td><td>จำนวนครั้งที่เซลบันทึกการเยี่ยมในช่วงที่เลือก</td></tr>
+          <tr><td><strong>ซื้อ</strong></td><td>จำนวนร้านที่สั่งซื้อสินค้า</td></tr>
+          <tr><td><strong>ไม่ซื้อ</strong></td><td>จำนวนร้านที่ไม่ซื้อ</td></tr>
+          <tr><td><strong>ไม่พบ</strong></td><td>จำนวนร้านที่ไม่พบเจ้าของ</td></tr>
+          <tr><td><strong>สลิปรออนุมัติ</strong></td><td>จำนวนสลิปที่ยังไม่ได้ตรวจสอบ</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sales">
+    <div class="section-header">
+      <div class="section-icon">🏆</div>
+      <div>
+        <div class="section-title">สถิติเซล</div>
+        <div class="section-sub">อันดับและรายละเอียดการเยี่ยมของแต่ละเซล</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">ฟีเจอร์หลัก</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">ดู <strong>Leaderboard</strong> อันดับเซลที่เยี่ยมร้านมากที่สุดในช่วงที่เลือก</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><strong>ค้นหาเซล</strong> ด้วยชื่อหรืออีเมลได้ทันที</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">กดที่แถวของเซลเพื่อดู <strong>รายการเยี่ยมร้านทั้งหมด</strong> พร้อมกรองผล ทริป จังหวัดได้</div></div>
+      </div>
+    </div>
+    <div class="tip">กรองตามช่วงเวลาและจังหวัดร่วมกันเพื่อดูประสิทธิภาพของแต่ละทีมในแต่ละพื้นที่</div>
+  </section>
+
+  <section class="section" id="visits">
+    <div class="section-header">
+      <div class="section-icon">📍</div>
+      <div>
+        <div class="section-title">การเยี่ยมร้าน</div>
+        <div class="section-sub">รายการบันทึกการเยี่ยมทั้งหมด</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">การดูรายละเอียด</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">กรองรายการด้วย Dropdown (จังหวัด, ผล, ทริป, ภารกิจ, ลูกค้า)</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กดที่รายการเพื่อดูรายละเอียด: รูปภาพร้าน, สลิป, พิกัด GPS, เลขอ้างอิง, ยอดสั่งซื้อ</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">กดรูปภาพในรายละเอียดเพื่อดูแบบ <strong>fullscreen</strong> พร้อม swipe และ zoom ได้</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="approvals">
+    <div class="section-header">
+      <div class="section-icon">✅</div>
+      <div>
+        <div class="section-title">อนุมัติสลิป</div>
+        <div class="section-sub">ตรวจสอบและอนุมัติสลิปการชำระเงินจากเซล</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">ขั้นตอนการอนุมัติ</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">เลือก Filter <strong>รออนุมัติ</strong> เพื่อดูสลิปที่ยังไม่ได้ตรวจสอบ</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กดดูรูปสลิป ตรวจสอบยอดเงินและข้อมูลร้านค้า</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">กรอก <strong>ยอดเงิน (บาท)</strong> ที่ยืนยันจากสลิป</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">กด <strong>อนุมัติ</strong> หรือ <strong>ปฏิเสธ</strong> พร้อมระบุเหตุผล</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">สถานะสลิป</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>สถานะ</th><th>ความหมาย</th></tr>
+          <tr><td><strong>รออนุมัติ</strong></td><td>เซลแนบสลิปแล้ว รอ Admin ตรวจสอบ</td></tr>
+          <tr><td><strong>QR ยืนยันแล้ว</strong></td><td>ระบบ Slip2Go/EasySlip ตรวจสอบผ่านอัตโนมัติ</td></tr>
+          <tr><td><strong>อนุมัติแล้ว</strong></td><td>Admin อนุมัติเรียบร้อย</td></tr>
+          <tr><td><strong>ปฏิเสธ</strong></td><td>Admin ปฏิเสธ พร้อมเหตุผล</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="note"><strong>หมายเหตุ:</strong> สลิปที่ระบบตรวจ QR ผ่านแล้วจะข้ามขั้นตอนนี้อัตโนมัติ ไม่ต้องอนุมัติซ้ำ</div>
+  </section>
+
+  <section class="section" id="commissions">
+    <div class="section-header">
+      <div class="section-icon">💰</div>
+      <div>
+        <div class="section-title">ค่าคอม</div>
+        <div class="section-sub">คำนวณและบันทึกการจ่ายค่าคอมมิชชันรายเดือน</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">การใช้งาน</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">เลือก <strong>เดือน</strong> ที่ต้องการดู</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">ดูยอดขายและค่าคอมของแต่ละเซล (อัตรา % ตั้งค่าได้ที่เมนูตั้งค่า)</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">เซลที่ถึงเกณฑ์ขั้นต่ำจะแสดงปุ่ม <strong>บันทึกการจ่าย</strong></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">แนบสลิปการโอนเงิน แล้วกด <strong>บันทึก</strong></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">แท็บในหน้านี้</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>แท็บ</th><th>เนื้อหา</th></tr>
+          <tr><td><strong>คำนวณ</strong></td><td>รายการเซลพร้อมยอดขาย ค่าคอม และสถานะการจ่าย</td></tr>
+          <tr><td><strong>ประวัติ</strong></td><td>รายการจ่ายค่าคอมที่บันทึกไว้แล้วทั้งหมด</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="note"><strong>หมายเหตุ:</strong> เซลที่ไม่มีข้อมูลบัญชีธนาคารจะแสดงคำเตือน ให้ติดต่อเซลให้อัปเดตข้อมูลในแอปก่อน</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="send">
+    <div class="section-header">
+      <div class="section-icon">💬</div>
+      <div>
+        <div class="section-title">ส่งข้อความ LINE</div>
+        <div class="section-sub">ส่งรูปสินค้าและรายละเอียดเข้ากลุ่ม LINE</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">ขั้นตอน</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">อัปโหลด <strong>รูปสินค้า</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กรอก <strong>ชื่อสินค้า</strong> (จำเป็น), ราคา, และหมายเหตุ</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">เลือก <strong>ส่งให้ทุกคน</strong> หรือเลือกเซลที่ต้องการส่งถึง</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">กด <strong>ส่งเข้า LINE Group</strong></div></div>
+      </div>
+    </div>
+    <div class="tip">กลุ่ม LINE ต้องเชื่อมต่อกับระบบก่อน (ดูเมนู เชื่อมต่อกลุ่ม)</div>
+  </section>
+
+  <section class="section" id="connect">
+    <div class="section-header">
+      <div class="section-icon">🔗</div>
+      <div>
+        <div class="section-title">เชื่อมต่อ LINE Group</div>
+        <div class="section-sub">นำ Bot เข้ากลุ่ม LINE เพื่อรับและส่งข้อความ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">วิธีเชื่อมต่อกลุ่มใหม่</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">กด <strong>เพิ่ม Bot เป็นเพื่อนใน LINE</strong> แล้วรอให้ Bot ยอมรับ</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">เพิ่ม Bot เข้ากลุ่ม LINE ที่ต้องการ</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">กด <strong>สร้างรหัสยืนยัน</strong> ในระบบ (รหัสหมดอายุใน 5 นาที)</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">พิมพ์รหัสในกลุ่ม LINE — ระบบจะยืนยันการเชื่อมต่ออัตโนมัติ</div></div>
+      </div>
+    </div>
+    <div class="note"><strong>หมายเหตุ:</strong> LINE Bot ID ตั้งค่าได้ที่เมนูตั้งค่าระบบ</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="settings">
+    <div class="section-header">
+      <div class="section-icon">⚙️</div>
+      <div>
+        <div class="section-title">ตั้งค่าระบบ</div>
+        <div class="section-sub">กำหนดค่า API และพารามิเตอร์ระบบ</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">รายการตั้งค่า</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>หัวข้อ</th><th>รายละเอียด</th></tr>
+          <tr><td><strong>LINE Bot ID</strong></td><td>ID ของ Bot ที่ใช้ส่งข้อความและรับรหัสยืนยัน</td></tr>
+          <tr><td><strong>Slip Verification</strong></td><td>เลือกผู้ให้บริการ Slip2Go หรือ EasySlip พร้อม Secret Key</td></tr>
+          <tr><td><strong>ค่าคอม (%)</strong></td><td>อัตราค่าคอมมิชชัน เช่น 3% ของยอดขายรวม</td></tr>
+          <tr><td><strong>เกณฑ์ขั้นต่ำ (บาท)</strong></td><td>ยอดขายขั้นต่ำที่ต้องถึงก่อนได้รับค่าคอม</td></tr>
+          <tr><td><strong>Google Sheets ID</strong></td><td>Sheet สำหรับ sync ข้อมูลการเยี่ยมและค่าคอม</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="note"><strong>สำคัญ:</strong> กด <strong>บันทึก</strong> ทุกครั้งหลังแก้ไข — การตั้งค่าจะไม่บันทึกอัตโนมัติ</div>
+  </section>
+
+  <section class="section" id="users">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div>
+        <div class="section-title">จัดการผู้ใช้</div>
+        <div class="section-sub">เพิ่ม แก้ไข และกำหนดสิทธิ์ผู้ใช้งาน</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">เพิ่มผู้ใช้ใหม่</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">กดปุ่ม <strong>เพิ่มผู้ใช้</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กรอกชื่อ, อีเมล, รหัสผ่านตั้งต้น</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">เลือก <strong>Role</strong> (สิทธิ์) ที่ต้องการ</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">กด <strong>บันทึก</strong></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">การแก้ไขและลบ</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">กดไอคอน <strong>แก้ไข</strong> ที่แถวผู้ใช้ เพื่อเปลี่ยนชื่อ อีเมล Role หรือรหัสผ่าน</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">กดไอคอน <strong>ลบ</strong> เพื่อลบผู้ใช้ออกจากระบบ (ไม่สามารถกู้คืนได้)</div></div>
+      </div>
+    </div>
+    <div class="tip">แนะนำให้กำหนด Role ให้ผู้ใช้ทุกคน — ผู้ใช้ที่ไม่มี Role จะเข้าถึงระบบไม่ได้</div>
+  </section>
+
+  <section class="section" id="roles">
+    <div class="section-header">
+      <div class="section-icon">🛡️</div>
+      <div>
+        <div class="section-title">จัดการสิทธิ์ (Role)</div>
+        <div class="section-sub">กำหนดว่าแต่ละ Role เข้าถึงเมนูใดได้บ้าง</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">สิทธิ์แต่ละเมนู</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>สิทธิ์</th><th>ทำได้</th></tr>
+          <tr><td><strong>ดู (View)</strong></td><td>เข้าหน้านั้นได้ มองเห็นข้อมูล แต่ไม่มีปุ่มดำเนินการ</td></tr>
+          <tr><td><strong>แก้ไข (Edit)</strong></td><td>ใช้ปุ่มอนุมัติ บันทึก ส่ง สร้าง แก้ไขได้</td></tr>
+          <tr><td><strong>ลบ (Delete)</strong></td><td>ลบข้อมูลได้</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">สร้าง Role ใหม่</div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">กดปุ่ม <strong>สร้าง Role</strong></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">ตั้งชื่อ Role เช่น "ผู้จัดการ" หรือ "เซลอาวุโส"</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text">เลือก <strong>ดู / แก้ไข / ลบ</strong> สำหรับแต่ละเมนู</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">กด <strong>บันทึก</strong> แล้วไปกำหนด Role นี้ให้ผู้ใช้ที่หน้าจัดการผู้ใช้</div></div>
+      </div>
+    </div>
+    <div class="note"><strong>ข้อควรระวัง:</strong> Role <strong>แอดมิน</strong> มีสิทธิ์ทุกอย่าง ให้เฉพาะผู้ดูแลระบบเท่านั้น</div>
+  </section>
+</main>
+
+<script>
+  const links = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.section');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector('.nav-link[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
